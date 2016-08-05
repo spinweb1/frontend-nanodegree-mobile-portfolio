@@ -13,7 +13,7 @@
 		  collapseWhitespace: true
 		},
 		files: {                                   // Dictionary of files 
-		  '../../dist/pizza.html': 'pizza.html'          // 'destination': 'source' 
+		  '../../dist/views/pizza.html': 'pizza.html'          // 'destination': 'source' 
 		}
 	  }
 	},
