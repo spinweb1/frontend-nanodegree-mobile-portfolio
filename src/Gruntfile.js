@@ -80,5 +80,5 @@
   // Default task(s).
   grunt.registerTask('default', ['responsive_images', 'imagemin', 'processhtml', 'htmlmin']);
   grunt.registerTask('images', ['responsive_images', 'imagemin', 'processhtml']);
-  //grunt.registerTask('images', ['responsive_images', 'imagemin', 'htmlmin']);
+
 };
