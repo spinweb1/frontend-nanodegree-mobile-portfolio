@@ -426,10 +426,13 @@ var resizePizzas = function(size) {
 
 
   // Iterates through pizza elements on the page and changes their widths
+  // Cached DOM querying to save from accessing 4 times.  Pulled determination of newWidth outside
+  //  of the for loop.
   // Borrowed from the forum on this.
   function changePizzaSizes(size) {
     var newWidth;
 
+	// Moved determination of newWidth outside of for loop
     switch(size) {
       case "1":
         newWidth = 25;
@@ -444,6 +447,7 @@ var resizePizzas = function(size) {
         console.log("bug in sizeSwitcher");
     }
 
+	// Switched to getElementsByClassName() vs. querySelectorAll()
     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
 
     for (var i = 0; i < randomPizzas.length; i++) {
@@ -463,8 +467,11 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 50; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
+// Moved pizzasDiv variable out of for loop
+var pizzasDiv = document.getElementById("randomPizzas");
+
+// Remove unnecessary loop iterations.  Went from 50 to 30.
+for (var i = 2; i < 30; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -526,11 +533,15 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
+// Moved this out of for loop.  Changed querySelector to getElementById
+var movingPizzas = document.getElementById("#movingPizzas1");
+
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 50; i++) {
+  // Reduced iterations from 50 to 30
+  for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -538,7 +549,8 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas.appendChild(elem);
   }
+  // Let requestAnimationFrame handle this
   requestAnimationFrame(updatePositions);
 });
